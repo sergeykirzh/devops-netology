@@ -98,7 +98,7 @@ for result in result_os.split('\n'):
        exit()
     if result.find('modified') != -1:
         prepare_result = result.repl
-		print(path+prepare_result)
+	print(path+prepare_result)
 ```
 
 ### Вывод скрипта при запуске при тестировании:
