@@ -97,7 +97,7 @@ for result in result_os.split('\n'):
        print("directory "+path+" is not a git repository")
        exit()
     if result.find('modified') != -1:
-        prepare_result = result.repl
+        prepare_result = result.replace('\tmodified:   ', '')
 	print(path+prepare_result)
 ```
 
