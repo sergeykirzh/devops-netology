@@ -199,9 +199,9 @@
 	sudo systemctl start nginx
 ```
 - Страница сервера nginx в браузере хоста не содержит предупреждений 
-![IMG1](img/img1.PNG)
-![IMG2](img/img2.PNG)
-![IMG3](img/img3.PNG)
+![IMG1](IMG/img1.png)
+![IMG2](IMG/Img2.png)
+![IMG3](IMG/Img3.png)
 
 - Скрипт генерации нового сертификата работает (сертификат сервера ngnix должен быть "зеленым")
 
@@ -226,7 +226,8 @@
 	vault operator seal
 	rm test.kirzhaev.com.crt.*
 
-```	
+```
+```
 	#После запуска видно, что сертификат обновился.Вывод журнала(Время  на сервере в UTC)
 	Dec 30 11:48:18 vagrant vault[672]: 2021-12-30T11:48:18.020Z [INFO]  core.cluster-listener.tcp: starting listener: listener_address=127.0.0.1:8201
 	Dec 30 11:48:18 vagrant vault[672]: 2021-12-30T11:48:18.020Z [INFO]  core.cluster-listener: serving cluster requests: cluster_listen_address=127.0.0.1:8201
@@ -260,11 +261,9 @@
 	Dec 30 11:48:19 vagrant vault[672]: 2021-12-30T11:48:19.022Z [INFO]  core.cluster-listener: rpc listeners successfully shut down
 	Dec 30 11:48:19 vagrant vault[672]: 2021-12-30T11:48:19.022Z [INFO]  core: cluster listeners successfully shut down
 	Dec 30 11:48:19 vagrant vault[672]: 2021-12-30T11:48:19.022Z [INFO]  core: vault is sealed
-
 ```
 	
-	![IMG3](img/img3.PNG)
-	
+![IMG4](IMG/Img4.png)
 	
 	
 - Crontab работает (выберите число и время так, чтобы показать что crontab запускается и делает что надо)
