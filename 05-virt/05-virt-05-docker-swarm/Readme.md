@@ -34,7 +34,7 @@ docker node ls
 **Ответ.**
 
 
-![Задача 2](/05-virt-05-docker-swarm/img/virt05-01.PNG)
+![Задача 2](/05-virt/05-virt-05-docker-swarm/img/virt05-01.PNG)
 
 ---
 
@@ -53,7 +53,7 @@ docker service ls
 **Ответ.**
 
 
-![Задача 3](/05-virt-05-docker-swarm/img/virt05-02.PNG)
+![Задача 3](/05-virt/05-virt-05-docker-swarm/img/virt05-02.PNG)
 
 ---
 
