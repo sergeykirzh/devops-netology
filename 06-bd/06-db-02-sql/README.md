@@ -359,6 +359,7 @@ width — средний размер одной строки в байтах.
 ```
 pg_dumpall -U postgres  >  /backup/test_db.out 
 
+```
 
 **restore**
 
