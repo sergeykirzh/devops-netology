@@ -1,0 +1,46 @@
+stages:
+  - build
+  - testing
+
+docker-build:
+  image: docker:latest
+  stage: build
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  services:
+    - docker:dind
+  before_script:
+    -  echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+  script:
+    - |      
+      docker build --pull -t "${CI_REGISTRY_IMAGE}" .
+      docker push "${CI_REGISTRY_IMAGE}"       
+  only: 
+    - main
+
+docker-test:
+  image: docker:latest
+  stage: testing
+  variables:  
+    DOCKER_TLS_CERTDIR: "/certs"
+  # expected return in base64  
+    RETURN_GET_INFO: "eyJ2ZXJzaW9uIjogMywgIm1ldGhvZCI6ICJHRVQiLCAibWVzc2FnZSI6ICJSdW5uaW5nIn0K"
+  services:
+    - docker:dind
+  before_script:
+    -  echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+    -  apk add curl
+  script:
+    - docker pull  "${CI_REGISTRY_IMAGE}"  
+    - docker run -d --name python_web  -p 5290:5290  "${CI_REGISTRY_IMAGE}"     
+    - sleep 15
+    - RET=$(curl -X GET docker:5290/get_info | base64)  
+    - |
+      if [[ "$RET" == "$RETURN_GET_INFO" ]]; then 
+      echo "Test Pass"
+      else
+      echo "Test Fail"
+      exit 113
+      fi
+  only: 
+    - main
