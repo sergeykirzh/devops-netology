@@ -19,7 +19,7 @@ locals {
 resource "yandex_compute_instance" "netologyvm" {
   name                      = "netologyvm-${terraform.workspace}-${count.index}"
   zone                      = "ru-central1-a"
-  hostname                  = "netologyvm-${terraform.workspace}${count.index}.netology.cloud"
+  hostname                  = "netologyvm-${terraform.workspace}-${count.index}.netology.cloud"
   platform_id               = local.instance_type[terraform.workspace]
   count                     = local.count_pc[terraform.workspace]
   allow_stopping_for_update = true
