@@ -2,25 +2,49 @@
 
 ## Дипломный практикум в YandexCloud
 
-## Цели:
+## Проведенные работы:
 
-1. Зарегистрировать доменное имя (любое на ваш выбор в любой доменной зоне).
-
-**Результат**
-
-Зарегистрировано доменное имя **sksaransk.ru** у регистратора **reg.ru**
-
-2. Подготовить инфраструктуру с помощью Terraform на базе облачного провайдера YandexCloud.
-
-**Результат**
- 
+- Зарегистрировано доменное имя **sksaransk.ru** у регистратора **reg.ru**
  - Созданы  два workspace: stage и prod
  - Сконфигурирован S3 backend в YC облаке 
+ 
 ![IMG](img/YC_BACKEND.PNG)
 
- - Переменная YC_TOKEN экспортирована в переменные окружения
- - Команда terraform apply дает следующую картину
+ - Токен для подключения к YC Cloud  экспортирован в переменную окружения YC_TOKEN
+ - После последовательго применения команд terraform init, terraform plan, terraform apply в облаке инициализируется 7 хостов
+
 ![IMG](img/YC.PNG)
+
+- Подготовдены ansible роли, после разворачивания получили следующие сервисы:
+
+  **Сайт на wordpress**
+  
+  
+ ![IMG](img/WORDPRESS.PNG)
+ 
+ **.gitlab-ci.yml**
+
+
+ ![IMG](img/GITLAB_CI.PNG)
+ 
+ **gitlab job**
+ 
+  ![IMG](img/GITLAB_JOB.PNG)
+  
+  
+  **gitlab runner**
+  
+ ![IMG](img/GITLAB_RUNNER.PNG)
+
+
+**prometheus**
+
+![IMG](img/PROMETHEUS1.PNG)
+
+
+**alertmanager**
+
+![IMG](img/AlertManager.PNG)
 
 
 
