@@ -1,0 +1,7 @@
+---
+
+- name: copy gitlab  files
+  ansible.posix.synchronize:
+    src: /var/diplom_src/gitlab/
+    dest: /data/docker/gitlab/
+    rsync_path: sudo rsync

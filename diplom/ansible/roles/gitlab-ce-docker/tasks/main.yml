@@ -1,0 +1,51 @@
+---
+
+
+- name: pull an image docker-ce
+  docker_image:
+    name: gitlab/gitlab-ce
+    tag: latest
+    source: pull
+
+- name: create directory
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:  
+    - /data/docker/gitlab/etc/gitlab
+    - /data/docker/gitlab/var/opt/gitlab
+    - /data/docker/gitlab/var/log/gitlab
+
+- name: include gitlab stat
+  include_tasks: cp_conf_path.yml 
+  when: deploy_gitlab_ce 
+
+- name: copy gitlab config
+  template: 
+   src: gitlab.rb
+   dest: /data/docker/gitlab/etc/gitlab/gitlab.rb
+
+
+- name: Create a network
+  community.docker.docker_network:
+    name: gitlab_net
+
+- name: Create a gitlab container
+  docker_container:
+    name: gitlab
+    image: gitlab/gitlab-ce:latest
+    restart_policy: unless-stopped
+    volumes:
+      - /data/docker/gitlab/etc/gitlab:/etc/gitlab
+      - /data/docker/gitlab/var/opt/gitlab:/var/opt/gitlab
+      - /data/docker/gitlab/var/log/gitlab:/var/log/gitlab
+    networks:
+      - name: gitlab_net
+    ports:
+      - "8000:80"
+      - "8822:22"
+    env:
+       GITLAB_OMNIBUS_CONFIG: "gitlab_rails['gitlab_shell_ssh_port'] = 8822"
+      
+        
+     

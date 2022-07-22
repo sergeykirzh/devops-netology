@@ -1,0 +1,6 @@
+---
+- name: copy certs file
+  ansible.posix.synchronize:
+    src: "/var/diplom_src/letsencrypt/{{domain}}/"
+    dest: /etc/letsencrypt/
+    rsync_path: sudo rsync

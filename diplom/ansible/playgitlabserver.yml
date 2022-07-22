@@ -1,0 +1,12 @@
+- hosts: gitlab_server
+  become: true
+  become_method: sudo
+  become_user: root
+  remote_user: netology
+  roles:
+   - docker-install
+   - gitlab-ce-docker
+   - node_exporter
+   
+
+

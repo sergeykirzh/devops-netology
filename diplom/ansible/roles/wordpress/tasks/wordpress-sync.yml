@@ -1,0 +1,7 @@
+---
+
+- name: copy wordpress  files
+  ansible.posix.synchronize:
+    src: wordpress
+    dest: /var/www/html/
+    rsync_path: sudo rsync

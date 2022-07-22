@@ -1,0 +1,9 @@
+- hosts: wordpress
+  become: true
+  become_method: sudo
+  become_user: root
+  remote_user: netology
+  roles:
+   - wordpress
+   - php
+   - node_exporter

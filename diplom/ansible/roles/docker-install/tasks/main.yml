@@ -1,0 +1,28 @@
+- name: Check if docker is already installed.
+  stat: path=/usr/bin/docker
+  register: docker_pkg
+
+- name: Download  Docker installation script.
+  get_url:
+    url: "https://get.docker.com"
+    dest: /tmp/get-docker.sh
+    validate_certs: true
+  when: not docker_pkg.stat.exists    
+
+- name: install Docker
+  command: sh  /tmp/get-docker.sh
+  when: not docker_pkg.stat.exists
+
+- name: install pip
+  apt: 
+    name: pip
+    update_cache: yes 
+    state: present 
+- name: Install docker python package
+  pip:
+    name: docker    
+
+- name: Log into DockerHub
+  docker_login:
+    username: "{{lookup('env','DOCKER_USER')}}"
+    password: "{{lookup('env','DOCKER_PASSWORD')}}"

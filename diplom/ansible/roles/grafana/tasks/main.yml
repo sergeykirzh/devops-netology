@@ -1,0 +1,24 @@
+---
+
+- name: Add an Apt signing key grafana
+  ansible.builtin.apt_key:
+    url: https://packages.grafana.com/gpg.key
+    state: present
+
+- name: Add source repository into sources list
+  ansible.builtin.apt_repository:
+    repo: deb https://packages.grafana.com/oss/deb stable main
+    state: present  
+
+- name: Install Grafana
+  ansible.builtin.apt:
+    name: grafana
+    state: latest 
+    update_cache: yes 
+  notify:
+    - restart grafana-server
+
+- name: deploy config grafana
+  include_tasks: cp_configure_grafana.yml  
+  when: deploy_configure
+    

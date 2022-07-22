@@ -1,0 +1,43 @@
+--- 
+
+- name: install mssql
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - python3-pymysql
+    - mysql-server
+
+- name: start mysql
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+
+- name: install conf
+  copy:
+    src: my.cnf
+    dest: /etc/mysql/my.cnf
+  notify:  restart mysql 
+
+- name: Create new databases with names 'wordpress'
+  community.mysql.mysql_db:
+    login_unix_socket: /var/run/mysqld/mysqld.sock    
+    name: wordpress
+    state: present
+    login_user: root  
+
+- name: Change primary server
+  community.mysql.mysql_replication:
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    mode: changeprimary
+    primary_host: "{{ db1_ip }}" 
+    primary_user: replication
+    primary_password: replication
+  when: init_replication 
+  
+- name: Start Mysql replica 
+  community.mysql.mysql_replication:
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    mode: startreplica 
+  when: init_replication 

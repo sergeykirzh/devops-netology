@@ -1,0 +1,46 @@
+---
+
+- name: install mssql
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - python3-pymysql
+    - mysql-server
+
+- name: install conf
+  template:
+    src: my.cnf
+    dest: /etc/mysql/my.cnf
+  notify: restart mysql  
+
+- name: start mysql
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+
+- name: Create new databases with names 'wordpress'
+  community.mysql.mysql_db:
+    login_unix_socket: /var/run/mysqld/mysqld.sock    
+    name: wordpress
+    state: present
+    login_user: root
+
+- name: Create database user wordpress
+  community.mysql.mysql_user:
+    name: wordpress
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    host: 192.168.%.%
+    password: wordpress
+    priv: 'wordpress.*:ALL'
+    state: present
+
+- name: Specify grants composed of more than one word
+  community.mysql.mysql_user:
+    name: replication
+    host: 192.168.%.%
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    password: replication
+    priv: "*.*:REPLICATION SLAVE"
+    state: present

@@ -1,0 +1,26 @@
+- hosts: db_1
+  become: true
+  become_method: sudo
+  become_user: root
+  remote_user: netology
+  roles:
+   - mysql-master
+   - node_exporter
+
+- hosts: db_2
+  become: true
+  become_method: sudo
+  become_user: root
+  remote_user: netology
+  roles:
+   - mysql-slave  
+   - node_exporter 
+
+- hosts: db_1
+  become: true
+  become_method: sudo
+  become_user: root
+  remote_user: netology
+  roles:
+   - mysql_restore
+  

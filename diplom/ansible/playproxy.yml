@@ -1,0 +1,13 @@
+---
+- hosts: revers_proxy
+  become: true
+  become_method: sudo
+  become_user: root
+  remote_user: netology
+  roles:
+   - certbot
+   - nginx  
+   - node_exporter
+   - iptables
+   
+

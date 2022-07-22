@@ -1,0 +1,36 @@
+---
+
+- name: Check if runner is already installed.
+  stat: path=/usr/bin/gitlab-runner
+  register: runner_pkg
+
+- name: Download gitlub-runner update repositories script.
+  get_url:
+    url: "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh"
+    dest: /tmp/get-runner.sh
+    validate_certs: true
+  when: not runner_pkg.stat.exists    
+
+- name: run gitlab-runner script
+  command: bash  /tmp/get-runner.sh
+  when: not runner_pkg.stat.exists
+
+- name: install gitlab runner
+  apt: 
+    name: gitlab-runner
+    state: present 
+  notify:
+    - restart gitlab-runner 
+
+- name: change /etc/hosts
+  template: 
+    src: hosts
+    dest: /etc/hosts
+
+- name: Copy Runner conf
+  copy:
+   src: config.toml
+   dest: /etc/gitlab-runner/config.toml
+  when: grunner_deploy_configure
+  notify:
+    - restart gitlab-runner        

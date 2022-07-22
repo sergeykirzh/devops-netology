@@ -1,0 +1,17 @@
+---
+
+- name: copy lib/
+  ansible.posix.synchronize:
+    src: /var/diplom_src/grafana/lib/
+    dest: /var/lib/grafana/
+    delete: yes
+    rsync_path: sudo rsync 
+
+- name: copy etc/
+  ansible.posix.synchronize:
+    src: /var/diplom_src/grafana/etc/
+    dest: /etc/grafana/
+    delete: yes
+    rsync_path: sudo rsync
+  notify:
+    - restart grafana-server  

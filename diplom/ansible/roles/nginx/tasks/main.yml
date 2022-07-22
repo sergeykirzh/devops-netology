@@ -1,0 +1,35 @@
+---
+
+- name: install Nginx
+  include_tasks: install-nginx.yml
+
+- name: Creates directory
+  file:
+    path: /var/www/html/.well-known/acme-challenge/
+    state: directory
+
+- name: Nginx conf copy 
+  copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf 
+
+- name: Creates acme root index file
+  copy:
+    src: index.html
+    dest: /var/www/html/.well-known/acme-challenge/index.html
+
+- name: get the file list
+  shell: ls -1 {{virtual_host_conf_path}}
+  register: all_domain
+
+- name: create Nginx domain host
+  include_tasks: vitrhostdeploy.yml
+  with_items: "{{all_domain.stdout_lines}}"
+  loop_control:
+    loop_var: domain_name
+
+- name: restart Nginx
+  command: echo "this task will restart the web services"
+  notify: 
+    - restart nginx    
+    

@@ -1,0 +1,9 @@
+- hosts: gitlab_runner
+  become: true
+  become_method: sudo
+  become_user: root
+  remote_user: netology
+  roles:
+   - docker-install
+   - grunner
+   - node_exporter

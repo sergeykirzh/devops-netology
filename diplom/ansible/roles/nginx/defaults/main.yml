@@ -1,0 +1,17 @@
+---
+
+virtual_host_conf_path: /etc/letsencrypt/live/
+
+proxy_pass_host:   "{% if domain_name == domain  %}
+                    http://{{app_ip}}:443
+                   {% elif  domain_name == 'gitlab.' + domain %}
+                    http://{{gitlab_ip}}:8000
+                   {% elif  domain_name == 'grafana.' + domain %}
+                    http://{{monitoring_ip}}:3000
+                   {% elif  domain_name == 'alertmanager.' + domain %}
+                    http://{{monitoring_ip}}:9093
+                   {% elif  domain_name == 'prometheus.' + domain %}
+                    http://{{monitoring_ip}}:9090
+                   {% else %}
+                    ''
+                   {% endif %}"

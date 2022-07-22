@@ -1,0 +1,31 @@
+---
+
+- name: copy lib/
+  ansible.posix.synchronize:
+    src: grafana/lib/
+    dest: /var/lib/grafana/
+    delete: yes
+    rsync_path: sudo rsync 
+
+- name: copy etc/
+  ansible.posix.synchronize:
+    src: grafana/etc/
+    dest: /etc/grafana/
+    delete: yes
+    rsync_path: sudo rsync
+  notify:
+    - restart grafana-server  
+
+
+
+- name: set mode
+  file:
+   name: "{{item}}"
+   recurse: yes
+   owner: grafana
+   group: grafana
+  with_items: 
+   - /etc/grafana
+   - /var/lib/grafana
+  notify:
+    - restart grafana-server  

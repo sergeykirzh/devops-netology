@@ -1,0 +1,10 @@
+- hosts: grafana
+  become: true
+  become_method: sudo
+  become_user: root
+  remote_user: netology
+  roles:
+   - node_exporter
+   - grafana
+   - prometheus
+   - alertmanager

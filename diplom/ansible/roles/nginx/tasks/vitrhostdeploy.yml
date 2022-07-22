@@ -1,0 +1,7 @@
+---
+
+- name: Deploy sertificate to nginx
+  template:
+    src: virtualhost.conf
+    dest: /etc/nginx/conf.d/{{ domain_name }}.conf 
+    

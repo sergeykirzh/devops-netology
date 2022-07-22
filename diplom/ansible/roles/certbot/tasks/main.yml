@@ -1,0 +1,31 @@
+---
+
+- name: include certs
+  include_tasks: sync_letsencrypt.yml   
+  when: certbot_include_exist_cert
+
+- name: Install Certbot.
+  apt:
+    name: certbot
+    state: latest 
+    update_cache: yes 
+
+- name: Set Certbot script variable.
+  set_fact:
+    certbot_script: "{{ certbot_package }}"
+
+
+- include_tasks: create-cert-standalone.yml
+  with_items: "{{ certbot_certs }}"
+  loop_control:
+    loop_var: cert_item
+
+- name: Add cron job for certbot renewal (if configured).
+  cron:
+    name: Certbot automatic renewal.
+    job: "{{ certbot_script }} renew {{ certbot_auto_renew_options }}"
+    minute: "{{ certbot_auto_renew_minute }}"
+    hour: "{{ certbot_auto_renew_hour }}"
+    user: "{{ certbot_auto_renew_user }}"
+
+

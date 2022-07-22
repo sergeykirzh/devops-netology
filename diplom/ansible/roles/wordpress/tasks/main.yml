@@ -1,0 +1,34 @@
+---
+
+- name: install nginx
+  apt:
+   name: nginx
+   state: present
+
+- name: install conf
+  copy:
+   src: web.conf
+   dest: /etc/nginx/nginx.conf
+  tags: conf
+  notify: restart nginx
+
+- name: sync wordress
+  include_tasks: wordpress-sync.yml  
+
+- name: copy wp-config
+  template: 
+   src: wp-config.php
+   dest: /var/www/html/wordpress/wp-config.php
+
+- name: set mode
+  file:
+   name: /var/www/html/wordpress
+   recurse: yes
+   owner: www-data
+   group: www-data
+
+- name: start nginx
+  service:
+   name: nginx
+   state: started
+   enabled: yes
