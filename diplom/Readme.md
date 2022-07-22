@@ -56,6 +56,15 @@
 - Учетная запись для входа в web-интерфейс у gitlab: root, wordpress: serg, у оставшихся: admin; пароль везде:
 - Переменные задаются в variables.tf, S3 backend  настраивается в versions.tf
 - По умолчанию сертификаты генерируются в тестовой зоне
+- Учетные данные для подключения к dockerhub экспортируются а переменные окружения DOCKER_USER, DOCKER_PASSWORD
+- Публичныйй сертификат для возможности подключения по протоколу SSH к удаленному хосту копируется в файл meta.yaml
+- В процессе разворачивания конфигурации иглаются следующие плайбуки: 
+    - playgitlabserver.yml - установка и настрока gitlab-server    
+    - playdb.yml - установка и настрока кластера my-sql     
+    - playwordpress.yml - установка и настрока wordpress
+    - playproxy.yml - установка и настрока revers-proxy
+    - playmonitoring.yml - установка и настрока grafana,prometheus, alertmanager
+    - playgrunner.yml - установка  gitlab-runner
 
 
 
