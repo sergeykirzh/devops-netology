@@ -15,7 +15,7 @@
 
 ![IMG](img/YC.PNG)
 
-- Подготовдены ansible роли, после разворачивания получили следующие сервисы:
+- Подготовлены ansible роли, после разворачивания получили следующие сервисы:
 
   **Сайт на wordpress**
   
@@ -44,16 +44,19 @@
 
 **alertmanager**
 
-![IMG](img/AlertManager.PNG)
+![IMG](img/AlertManager_.PNG)
+
+
+**grafana**
+
+![IMG](img/GRAFANA.PNG)
+
+
+
+- Учетная запись для входа в web-интерфейс у gitlab: root, wordpress: serg, у оставшихся: admin; пароль везде:
+- Переменные задаются в variables.tf, S3 backend  настраивается в versions.tf
+- По умолчанию сертификаты генерируются в тестовой зоне
 
 
 
 
-
-
-Настроить внешний Reverse Proxy на основе Nginx и LetsEncrypt.
-Настроить кластер MySQL.
-Установить WordPress.
-Развернуть Gitlab CE и Gitlab Runner.
-Настроить CI/CD для автоматического развёртывания приложения.
-Настроить мониторинг инфраструктуры с помощью стека: Prometheus, Alert Manager и Grafana.
